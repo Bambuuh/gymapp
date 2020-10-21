@@ -53,7 +53,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
               onPressed: () => {},
               margin: EdgeInsets.only(bottom: 32),
             ),
-            NeumorphicTextField(titleController, 'Title'),
+            NeumorphicTextField(
+              controller: titleController,
+              placeholder: 'Title',
+              autoFocus: true,
+            ),
             MorphButton(
               child: Text('Create Workout'),
               onPressed: () => onPressNewWorkout(context),

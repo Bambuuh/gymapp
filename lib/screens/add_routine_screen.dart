@@ -40,7 +40,11 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
           padding: EdgeInsets.all(16),
           child: Column(
             children: [
-              NeumorphicTextField(titleController, 'Title'),
+              NeumorphicTextField(
+                controller: titleController,
+                placeholder: 'Title',
+                autoFocus: true,
+              ),
               MorphButton(
                 child: Text('Create Routine'),
                 onPressed: () => onPressSave(context),
