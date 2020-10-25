@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/screens/routine_list_screen.dart';
+import 'package:gymapp/screens/workout_routine_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   Widget buildOptionButton(String title, Function onPressed) {
@@ -30,14 +31,8 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              buildOptionButton(
-                  'Start Workout',
-                  () => Navigator.of(context)
-                      .pushNamed(RoutineListScreen.routeName)),
-              buildOptionButton(
-                  'Routines',
-                  () => Navigator.of(context)
-                      .pushNamed(RoutineListScreen.routeName)),
+              buildOptionButton('Start Workout', () => Navigator.of(context).pushNamed(WorkoutRoutineScreen.routeName)),
+              buildOptionButton('Routines', () => Navigator.of(context).pushNamed(RoutineListScreen.routeName)),
             ],
           ),
         ),

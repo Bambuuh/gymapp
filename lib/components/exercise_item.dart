@@ -3,8 +3,9 @@ import 'package:gymapp/modules/exercise.dart';
 
 class ExerciseItem extends StatelessWidget {
   final Exercise exercise;
+  final Function onPress;
 
-  ExerciseItem(this.exercise);
+  ExerciseItem(this.exercise, this.onPress);
 
   Widget buildRepetitions() {
     if (exercise.maxReps != null) {
@@ -13,8 +14,7 @@ class ExerciseItem extends StatelessWidget {
 
     if (exercise.repetitions != null) {
       final firstVal = exercise.repetitions[0];
-      final isFixed = exercise.repetitions
-          .fold(true, (previousValue, nmbr) => nmbr == firstVal);
+      final isFixed = exercise.repetitions.fold(true, (previousValue, nmbr) => nmbr == firstVal);
       if (isFixed) {
         return Text('Repetitions ${exercise.repetitions[0]}');
       }
@@ -34,11 +34,7 @@ class ExerciseItem extends StatelessWidget {
         child: Neumorphic(
           padding: EdgeInsets.all(16),
           child: Column(
-            children: [
-              Text(exercise.title),
-              Text('Sets ${exercise.sets}'),
-              buildRepetitions()
-            ],
+            children: [Text(exercise.title), Text('Sets ${exercise.sets}'), buildRepetitions()],
           ),
         ),
       ),

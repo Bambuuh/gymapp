@@ -1,7 +1,8 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:gymapp/components/routine_item.dart';
+import 'package:gymapp/components/routine_list.dart';
 import 'package:gymapp/providers/routine_provider.dart';
 import 'package:gymapp/screens/add_routine_screen.dart';
+import 'package:gymapp/screens/routine_screen.dart';
 import 'package:provider/provider.dart';
 
 class RoutineListScreen extends StatefulWidget {
@@ -16,18 +17,18 @@ class _RoutineListScreenState extends State<RoutineListScreen> {
     setState(() {});
   }
 
+  void onPressItem(context, String id) {
+    Navigator.pushNamed(context, RoutineScreen.routeName, arguments: id);
+  }
+
   @override
   Widget build(BuildContext context) {
-    var routineProvider = Provider.of<RoutineProvider>(context);
+    var routines = Provider.of<RoutineProvider>(context).routines;
     return Scaffold(
       appBar: NeumorphicAppBar(
-        title: Text('Home'),
+        title: Text('Routines'),
       ),
-      body: Container(
-        child: Column(
-          children: routineProvider.routines.map((routine) => RoutineItem(routine)).toList(),
-        ),
-      ),
+      body: Container(child: RoutineList(routines, onPressItem)),
       floatingActionButton: NeumorphicButton(
         style: NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
         onPressed: () {

@@ -8,7 +8,10 @@ import 'package:gymapp/screens/add_workout_screen.dart';
 import 'package:gymapp/screens/home_screen.dart';
 import 'package:gymapp/screens/routine_list_screen.dart';
 import 'package:gymapp/screens/routine_screen.dart';
+import 'package:gymapp/screens/workout_exercise_screen.dart';
+import 'package:gymapp/screens/workout_routine_screen.dart';
 import 'package:gymapp/screens/workout_screen.dart';
+import 'package:gymapp/screens/workout_workout_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -42,6 +45,9 @@ class MyApp extends StatelessWidget {
         home: HomeScreen(),
         routes: {
           AddRoutineScreen.routeName: (context) => AddRoutineScreen(),
+          WorkoutRoutineScreen.routeName: (context) => WorkoutRoutineScreen(),
+          WorkoutWorkoutScreen.routeName: (context) => WorkoutWorkoutScreen(),
+          WorkoutExerciseScreen.routeName: (context) => WorkoutExerciseScreen(),
           RoutineScreen.routeName: (context) => RoutineScreen(),
           WorkoutScreen.routeName: (context) => WorkoutScreen(),
           RoutineListScreen.routeName: (context) => RoutineListScreen(),

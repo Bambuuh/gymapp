@@ -1,5 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:gymapp/components/exercise_item.dart';
+import 'package:gymapp/components/exercise_list.dart';
 import 'package:gymapp/providers/routine_provider.dart';
 import 'package:gymapp/screens/add_exercise_screen.dart';
 import 'package:provider/provider.dart';
@@ -25,9 +25,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
       appBar: NeumorphicAppBar(
         title: Text(workout.title),
       ),
-      body: Column(
-        children: workout.exercises.map((exercise) => ExerciseItem(exercise)).toList(),
-      ),
+      body: ExerciseList(workout.exercises, () {}),
       floatingActionButton: NeumorphicButton(
         style: NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
         onPressed: () {

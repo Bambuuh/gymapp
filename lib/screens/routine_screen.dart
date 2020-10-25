@@ -1,6 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:gymapp/components/workout_item.dart';
+import 'package:gymapp/components/workout_list.dart';
 import 'package:gymapp/providers/routine_provider.dart';
+import 'package:gymapp/providers/workout.dart';
 import 'package:gymapp/screens/add_workout_screen.dart';
 import 'package:gymapp/screens/workout_screen.dart';
 import 'package:provider/provider.dart';
@@ -12,21 +13,17 @@ class RoutineScreen extends StatefulWidget {
   _RoutineScreenState createState() => _RoutineScreenState();
 }
 
-Widget buildRoutineItem(context, workout, routine) {
-  final arguments = {'routineId': routine.id, 'workoutId': workout.id};
-  final onPressed = () => Navigator.pushNamed(
-        context,
-        WorkoutScreen.routeName,
-        arguments: arguments,
-      );
-  return WorkoutItem(
-    workout: workout,
-    routineId: routine.id,
-    onPressed: onPressed,
-  );
-}
-
 class _RoutineScreenState extends State<RoutineScreen> {
+  void onPressItem(context, Workout workout) {
+    final String routineId = ModalRoute.of(context).settings.arguments;
+    final arguments = {'routineId': routineId, 'workoutId': workout.id};
+    Navigator.pushNamed(
+      context,
+      WorkoutScreen.routeName,
+      arguments: arguments,
+    );
+  }
+
   void onBack(_) {
     setState(() {});
   }
@@ -40,14 +37,7 @@ class _RoutineScreenState extends State<RoutineScreen> {
       appBar: NeumorphicAppBar(
         title: Text(routine.title),
       ),
-      body: Container(
-        child: Column(
-          children: routine.workouts
-              .map((workout) =>
-                  ChangeNotifierProvider.value(value: workout, child: buildRoutineItem(context, workout, routine)))
-              .toList(),
-        ),
-      ),
+      body: Container(child: WorkoutList(routine.workouts, onPressItem)),
       floatingActionButton: NeumorphicButton(
         style: NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
         onPressed: () {

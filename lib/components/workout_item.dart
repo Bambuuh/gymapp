@@ -3,29 +3,19 @@ import 'package:gymapp/providers/workout.dart';
 
 class WorkoutItem extends StatelessWidget {
   final Workout workout;
-  final String routineId;
   final Function onPressed;
 
-  WorkoutItem({
-    @required this.workout,
-    @required this.onPressed,
-    this.routineId,
-  });
-
-  // void onPressItem(context) {
-  //   Navigator.pushNamed(
-  //     context,
-  //     WorkoutScreen.routeName,
-  //     arguments: {'routineId': routineId, 'workoutId': workout.id},
-  //   );
-  // }
+  WorkoutItem(
+    this.workout,
+    this.onPressed,
+  );
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Container(
         child: NeumorphicButton(
-          onPressed: onPressed,
+          onPressed: () => onPressed(context, workout),
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Container(
             width: double.infinity,
