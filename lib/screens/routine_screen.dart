@@ -27,6 +27,10 @@ Widget buildRoutineItem(context, workout, routine) {
 }
 
 class _RoutineScreenState extends State<RoutineScreen> {
+  void onBack(_) {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final String routineId = ModalRoute.of(context).settings.arguments;
@@ -47,7 +51,7 @@ class _RoutineScreenState extends State<RoutineScreen> {
       floatingActionButton: NeumorphicButton(
         style: NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
         onPressed: () {
-          Navigator.of(context).pushNamed(AddWorkoutScreen.routeName, arguments: routine.id);
+          Navigator.of(context).pushNamed(AddWorkoutScreen.routeName, arguments: routine.id).then(onBack);
         },
         tooltip: 'Add workout',
         child: Icon(Icons.add),

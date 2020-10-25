@@ -12,6 +12,10 @@ class WorkoutScreen extends StatefulWidget {
 }
 
 class _WorkoutScreenState extends State<WorkoutScreen> {
+  void onBack(_) {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments as Map;
@@ -27,7 +31,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
       floatingActionButton: NeumorphicButton(
         style: NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
         onPressed: () {
-          Navigator.of(context).pushNamed(AddExerciseScreen.routeName, arguments: workout.id);
+          Navigator.of(context).pushNamed(AddExerciseScreen.routeName, arguments: workout.id).then(onBack);
         },
         tooltip: 'Add workout',
         child: Icon(Icons.add),

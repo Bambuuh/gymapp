@@ -12,6 +12,10 @@ class RoutineListScreen extends StatefulWidget {
 }
 
 class _RoutineListScreenState extends State<RoutineListScreen> {
+  void onBack(_) {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var routineProvider = Provider.of<RoutineProvider>(context);
@@ -21,15 +25,13 @@ class _RoutineListScreenState extends State<RoutineListScreen> {
       ),
       body: Container(
         child: Column(
-          children: routineProvider.routines
-              .map((routine) => RoutineItem(routine))
-              .toList(),
+          children: routineProvider.routines.map((routine) => RoutineItem(routine)).toList(),
         ),
       ),
       floatingActionButton: NeumorphicButton(
         style: NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
         onPressed: () {
-          Navigator.of(context).pushNamed(AddRoutineScreen.routeName);
+          Navigator.of(context).pushNamed(AddRoutineScreen.routeName).then(onBack);
         },
         tooltip: 'Add workout',
         child: Icon(Icons.add),
