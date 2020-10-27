@@ -10,6 +10,7 @@ class Exercise {
   int lastReps = 0;
   double lastWeight = 0;
   int completedSets = 0;
+  int restSeconds = 60;
 
   Exercise({
     this.id,
