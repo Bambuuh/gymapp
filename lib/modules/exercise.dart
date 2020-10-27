@@ -9,6 +9,7 @@ class Exercise {
   int maxReps;
   int lastReps = 0;
   double lastWeight = 0;
+  int completedSets = 0;
 
   Exercise({
     this.id,
@@ -25,5 +26,9 @@ class Exercise {
 
   void setWeight(double newWeight) {
     lastWeight = newWeight;
+  }
+
+  void completeSet() {
+    completedSets++;
   }
 }

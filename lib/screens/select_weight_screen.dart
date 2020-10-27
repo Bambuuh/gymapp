@@ -52,6 +52,7 @@ class _SelectWeightScreenState extends State<SelectWeightScreen> {
 
     Function onPressed = (String weights) {
       exercise.lastWeight = double.parse(weights);
+      exercise.completeSet();
       Navigator.of(context).popUntil((route) => route.settings.name == WorkoutExerciseScreen.routeName);
     };
 

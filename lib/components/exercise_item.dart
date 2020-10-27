@@ -1,4 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:gymapp/components/set_counter.dart';
 
 import '../modules/exercise.dart';
 import '../providers/workout.dart';
@@ -19,13 +20,13 @@ class ExerciseItem extends StatelessWidget {
       final firstVal = exercise.repetitions[0];
       final isFixed = exercise.repetitions.fold(true, (previousValue, nmbr) => nmbr == firstVal);
       if (isFixed) {
-        return Text('Repetitions ${exercise.repetitions[0]}');
+        return Text('Repetitions: ${exercise.repetitions[0]}');
       }
       String repetitions = exercise.repetitions.join(', ');
-      return Text('Repetitions $repetitions');
+      return Text('Repetitions: $repetitions');
     }
 
-    return Text('Failure');
+    return Text('Repetitions: to failure');
   }
 
   void onPressed() {
@@ -38,11 +39,30 @@ class ExerciseItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       width: double.infinity,
       child: Container(
+        height: 80,
         child: NeumorphicButton(
           onPressed: onPressed,
           padding: EdgeInsets.all(16),
-          child: Column(
-            children: [Text(exercise.title), Text('Sets ${exercise.sets}'), buildRepetitions()],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(exercise.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  buildRepetitions(),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('Sets ${exercise.sets}'),
+                  SetCounter(exercise),
+                ],
+              ),
+            ],
           ),
         ),
       ),

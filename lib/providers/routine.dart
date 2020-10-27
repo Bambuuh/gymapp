@@ -24,10 +24,6 @@ class Routine with ChangeNotifier {
   }
 
   void addWorkout(Workout workout) {
-    print('===========');
-    print(title);
-    print(workout.title);
-    print('===========');
     workouts.add(workout);
     notifyListeners();
   }

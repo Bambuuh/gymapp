@@ -59,11 +59,12 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
     final workout = routine.findWorkoutById(args['workoutId']);
 
     void onPressExercise(Exercise exercise) {
-      print(exercise.title);
       if (!workout.isRunning) {
         startWorkout(workout);
       }
-      Navigator.of(context).pushNamed(SelectRepetitionsScreen.routeName, arguments: exercise);
+      Navigator.of(context)
+          .pushNamed(SelectRepetitionsScreen.routeName, arguments: exercise)
+          .then((value) => setState(() {}));
     }
 
     return ChangeNotifierProvider<Workout>.value(
