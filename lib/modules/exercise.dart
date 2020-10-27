@@ -7,6 +7,8 @@ class Exercise {
   List<int> repetitions;
   int minReps;
   int maxReps;
+  int lastReps = 0;
+  double lastWeight = 0;
 
   Exercise({
     this.id,
@@ -19,5 +21,9 @@ class Exercise {
     if (id == null) {
       this.id = DateTime.now().toString();
     }
+  }
+
+  void setWeight(double newWeight) {
+    lastWeight = newWeight;
   }
 }

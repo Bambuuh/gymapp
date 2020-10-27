@@ -1,11 +1,14 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:gymapp/modules/exercise.dart';
+
+import '../modules/exercise.dart';
+import '../providers/workout.dart';
 
 class ExerciseItem extends StatelessWidget {
+  final Workout workout;
   final Exercise exercise;
   final Function onPress;
 
-  ExerciseItem(this.exercise, this.onPress);
+  ExerciseItem(this.workout, this.exercise, this.onPress);
 
   Widget buildRepetitions() {
     if (exercise.maxReps != null) {
@@ -25,13 +28,18 @@ class ExerciseItem extends StatelessWidget {
     return Text('Failure');
   }
 
+  void onPressed() {
+    onPress(exercise);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       width: double.infinity,
       child: Container(
-        child: Neumorphic(
+        child: NeumorphicButton(
+          onPressed: onPressed,
           padding: EdgeInsets.all(16),
           child: Column(
             children: [Text(exercise.title), Text('Sets ${exercise.sets}'), buildRepetitions()],

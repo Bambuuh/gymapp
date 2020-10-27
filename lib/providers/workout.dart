@@ -5,6 +5,8 @@ class Workout with ChangeNotifier {
   String id;
   String title;
   List<Exercise> exercises;
+  bool _isRunning = false;
+  Stopwatch _stopWatch = Stopwatch();
 
   Workout({
     this.id,
@@ -23,8 +25,37 @@ class Workout with ChangeNotifier {
     return exercises.firstWhere((exercise) => exercise.id == id);
   }
 
+  Duration get timeElapsed {
+    return _stopWatch.elapsed;
+  }
+
+  bool get isRunning {
+    return _isRunning && _stopWatch.elapsedMilliseconds > 0;
+  }
+
+  bool get isPaused {
+    return _stopWatch.elapsedMilliseconds > 0 && !_stopWatch.isRunning;
+  }
+
   void addExercise(Exercise exercise) {
     exercises.add(exercise);
+    notifyListeners();
+  }
+
+  void startWorkout() {
+    _isRunning = true;
+    _stopWatch.start();
+    notifyListeners();
+  }
+
+  void pauseWorkout() {
+    _stopWatch.stop();
+    notifyListeners();
+  }
+
+  void stopWorkout() {
+    _isRunning = false;
+    _stopWatch.reset();
     notifyListeners();
   }
 }
