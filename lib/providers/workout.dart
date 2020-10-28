@@ -37,6 +37,15 @@ class Workout with ChangeNotifier {
     return _stopWatch.elapsedMilliseconds > 0 && !_stopWatch.isRunning;
   }
 
+  void _resetWorkout() {
+    _isRunning = false;
+    _stopWatch.reset();
+    _stopWatch.stop();
+    exercises.forEach((exercise) {
+      exercise.completedSets = 0;
+    });
+  }
+
   void addExercise(Exercise exercise) {
     exercises.add(exercise);
     notifyListeners();
@@ -54,8 +63,7 @@ class Workout with ChangeNotifier {
   }
 
   void stopWorkout() {
-    _isRunning = false;
-    _stopWatch.reset();
+    _resetWorkout();
     notifyListeners();
   }
 }

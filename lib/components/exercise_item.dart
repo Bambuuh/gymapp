@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/set_counter.dart';
+import 'package:gymapp/util/helpers.dart';
 
 import '../modules/exercise.dart';
 import '../providers/workout.dart';
@@ -58,7 +59,7 @@ class ExerciseItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text('Sets ${exercise.sets}'),
+                  Text('Last weight: ${removeDecimalZeroFormat(exercise.lastWeight)} kg'),
                   SetCounter(exercise),
                 ],
               ),

@@ -2,6 +2,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/selection_button.dart';
 import 'package:gymapp/modules/exercise.dart';
 import 'package:gymapp/screens/rest_screen.dart';
+import 'package:gymapp/util/helpers.dart';
 
 class SelectWeightScreen extends StatefulWidget {
   static final String routeName = 'screen/select_weights_screen';
@@ -61,7 +62,7 @@ class _SelectWeightScreenState extends State<SelectWeightScreen> {
       body: ListView.builder(
         controller: _scrollController,
         itemCount: weights.length,
-        itemBuilder: (context, index) => SelectionButton(weights[index].toString(), onPressed),
+        itemBuilder: (context, index) => SelectionButton(removeDecimalZeroFormat(weights[index]), onPressed),
       ),
     );
   }

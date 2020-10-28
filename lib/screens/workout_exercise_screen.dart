@@ -18,7 +18,21 @@ class WorkoutExerciseScreen extends StatefulWidget {
 
 class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
   Timer timer;
-  String prettySessionTime = '';
+  String prettySessionTime = '00:00:00';
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      final args = ModalRoute.of(context).settings.arguments as Map;
+      final routine = Provider.of<RoutineProvider>(context, listen: false).findById(args['routineId']);
+      final workout = routine.findWorkoutById(args['workoutId']);
+      if (workout.isRunning && !workout.isPaused) {
+        startTimer(workout);
+        setPrettyTime(workout);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -26,7 +40,7 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
     timer.cancel();
   }
 
-  void callback(Timer timer, Workout workout) {
+  void setPrettyTime(Workout workout) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(workout.timeElapsed.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(workout.timeElapsed.inSeconds.remainder(60));
@@ -35,12 +49,16 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
     });
   }
 
+  void startTimer(Workout workout) {
+    Function cb = (Timer timer) {
+      setPrettyTime(workout);
+    };
+    timer = new Timer.periodic(new Duration(seconds: 1), cb);
+  }
+
   void startWorkout(Workout workout) {
     workout.startWorkout();
-    Function cb = (Timer timer) {
-      callback(timer, workout);
-    };
-    timer = new Timer.periodic(new Duration(milliseconds: 30), cb);
+    startTimer(workout);
   }
 
   void onPressTopRight(Workout workout) {
@@ -67,6 +85,13 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
           .then((value) => setState(() {}));
     }
 
+    void onPressStopWorkout() {
+      prettySessionTime = '00:00:00';
+      workout.stopWorkout();
+      timer.cancel();
+      setState(() {});
+    }
+
     return ChangeNotifierProvider<Workout>.value(
       value: workout,
       child: Scaffold(
@@ -75,12 +100,14 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
             builder: (_, workout, child) => workout.isRunning ? Text(prettySessionTime) : Text('Select Exercise'),
           ),
           actions: [
-            MorphButton(
-              child: Container(
-                alignment: Alignment.center,
-                child: Text('Stop'),
+            Container(
+              child: MorphButton(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text('Reset'),
+                ),
+                onPressed: onPressStopWorkout,
               ),
-              onPressed: workout.stopWorkout,
             ),
             Consumer<Workout>(
               builder: (_, workout, child) => MorphButton(
