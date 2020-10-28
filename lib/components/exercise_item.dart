@@ -34,6 +34,47 @@ class ExerciseItem extends StatelessWidget {
     onPress(exercise);
   }
 
+  Widget buildRows() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(exercise.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            buildRepetitions(),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text('Last weight: ${removeDecimalZeroFormat(exercise.lastWeight)} kg'),
+            SetCounter(exercise),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget buildItemContainer() {
+    const padding = EdgeInsets.all(16);
+    if (exercise.completedSets == exercise.sets) {
+      return Neumorphic(
+        style: NeumorphicStyle(depth: -4),
+        padding: padding,
+        child: buildRows(),
+      );
+    }
+
+    return NeumorphicButton(
+      onPressed: onPressed,
+      padding: padding,
+      child: buildRows(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,31 +82,7 @@ class ExerciseItem extends StatelessWidget {
       width: double.infinity,
       child: Container(
         height: 80,
-        child: NeumorphicButton(
-          onPressed: onPressed,
-          padding: EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(exercise.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  buildRepetitions(),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text('Last weight: ${removeDecimalZeroFormat(exercise.lastWeight)} kg'),
-                  SetCounter(exercise),
-                ],
-              ),
-            ],
-          ),
-        ),
+        child: buildItemContainer(),
       ),
     );
   }
