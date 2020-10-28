@@ -7,10 +7,10 @@ class Exercise {
   List<int> repetitions;
   int minReps;
   int maxReps;
-  int lastReps = 0;
-  double lastWeight = 0;
+  int lastReps;
+  double lastWeight;
   int completedSets = 0;
-  int restSeconds = 60;
+  int restSeconds;
 
   Exercise({
     this.id,
@@ -19,6 +19,9 @@ class Exercise {
     this.repetitions,
     this.minReps,
     this.maxReps,
+    this.lastReps = 0,
+    this.lastWeight = 0,
+    this.restSeconds = 60,
   }) {
     if (id == null) {
       this.id = DateTime.now().toString();
@@ -31,5 +34,38 @@ class Exercise {
 
   void completeSet() {
     completedSets++;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'sets': sets,
+      'repetitions': repetitions,
+      'minReps': minReps,
+      'maxReps': maxReps,
+      'lastReps': lastReps,
+      'lastWeight': lastWeight,
+      'completedSets': 0,
+      'restSeconds': restSeconds
+    };
+  }
+
+  static Exercise fromJson(json) {
+    final obj = Exercise(
+      id: json['id'],
+      title: json['title'],
+      sets: json['sets'],
+      repetitions: null,
+      minReps: json['minReps'],
+      maxReps: json['maxReps'],
+      lastReps: json['lastReps'],
+      lastWeight: json['lastWeight'],
+      restSeconds: json['restSeconds'],
+    );
+    if (json['repetitions'] != null) {
+      obj.repetitions = List<int>.from(json['repetitions'].toList());
+    }
+    return obj;
   }
 }

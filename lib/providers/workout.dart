@@ -66,4 +66,20 @@ class Workout with ChangeNotifier {
     _resetWorkout();
     notifyListeners();
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'exercises': exercises.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  static fromJson(json) {
+    return Workout(
+      id: json['id'],
+      title: json['title'],
+      exercises: List<Exercise>.from(json['exercises'].map((e) => Exercise.fromJson(e)).toList()),
+    );
+  }
 }

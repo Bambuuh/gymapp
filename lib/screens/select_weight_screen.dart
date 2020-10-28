@@ -1,8 +1,10 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/selection_button.dart';
 import 'package:gymapp/modules/exercise.dart';
+import 'package:gymapp/providers/routine_provider.dart';
 import 'package:gymapp/screens/rest_screen.dart';
 import 'package:gymapp/util/helpers.dart';
+import 'package:provider/provider.dart';
 
 class SelectWeightScreen extends StatefulWidget {
   static final String routeName = 'screen/select_weights_screen';
@@ -54,6 +56,7 @@ class _SelectWeightScreenState extends State<SelectWeightScreen> {
     Function onPressed = (String weights) {
       exercise.lastWeight = double.parse(weights);
       exercise.completeSet();
+      Provider.of<RoutineProvider>(context, listen: false).saveData();
       Navigator.of(context).pushNamed(RestScreen.routeName, arguments: exercise);
     };
 

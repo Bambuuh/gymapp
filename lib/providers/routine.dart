@@ -27,4 +27,20 @@ class Routine with ChangeNotifier {
     workouts.add(workout);
     notifyListeners();
   }
+
+  dynamic toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'workouts': workouts.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  static Routine fromJson(json) {
+    return Routine(
+      title: json['title'],
+      id: json['id'],
+      workouts: List<Workout>.from(json['workouts'].map((e) => Workout.fromJson(e)).toList()).toList(),
+    );
+  }
 }
