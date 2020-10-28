@@ -23,8 +23,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final Color base = Color(0xff333a42);
-  final Color light = Color(0xff596068);
-  final Color dark = Color(0xff0D141C);
+  final Color light = Color(0xff4D545C);
+  final Color dark = Color(0xff1A2129);
 
   @override
   Widget build(BuildContext context) {
