@@ -21,7 +21,7 @@ class Exercise {
     this.maxReps,
     this.lastReps = 0,
     this.lastWeight = 0,
-    this.restSeconds = 60,
+    this.restSeconds = 90,
   }) {
     if (id == null) {
       this.id = DateTime.now().toString();
