@@ -90,12 +90,116 @@ final List<Exercise> dayThree = [
   ),
 ];
 
-final List<Workout> mockWorkouts = [
+final List<Exercise> workoutA = [
+  Exercise(
+    id: '14',
+    title: 'Incline Barbell Bench Press',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+  Exercise(
+    id: '15',
+    title: 'Flat Barbell Bench Press',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+  Exercise(
+    id: '16',
+    title: 'Dip',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+  Exercise(
+    id: '17',
+    title: 'Barbell Pullover',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+];
+
+final List<Exercise> workoutB = [
+  Exercise(
+    id: '18',
+    title: 'Barbell Squat',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+  Exercise(
+    id: '19',
+    title: 'Front Barbell Squat',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+  Exercise(
+    id: '20',
+    title: 'Sumo Deadlift',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+  Exercise(
+    id: '21',
+    title: 'Barbell Stiff-Legged Deadlift',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+];
+final List<Exercise> workoutC = [
+  Exercise(
+    id: '22',
+    title: 'Barbell Military Press',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+  Exercise(
+    id: '23',
+    title: 'Barbell Upright Row',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+  Exercise(
+    id: '24',
+    title: 'Barbell Clean and Press',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+];
+final List<Exercise> workoutD = [
+  Exercise(
+    id: '25',
+    title: 'Pull-up',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+  Exercise(
+    id: '26',
+    title: 'Bent-Over Barbell Row',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+  Exercise(
+    id: '27',
+    title: 'Barbell Deadlift',
+    sets: 4,
+    repetitions: [15, 8, 8, 6],
+  ),
+];
+
+final List<Workout> threeDaySplit = [
   Workout(id: '1', title: 'Chest and Triceps', exercises: dayOne),
   Workout(id: '2', title: 'Back and Biceps', exercises: dayTwo),
   Workout(id: '3', title: 'Legs and Shoulders', exercises: dayThree),
 ];
 
+final List<Workout> rc26 = [
+  Workout(id: '4', title: 'Workout A', exercises: workoutA),
+  Workout(id: '5', title: 'Workout B', exercises: workoutB),
+  Workout(id: '6', title: 'Workout C', exercises: workoutC),
+  Workout(id: '7', title: 'Workout D', exercises: workoutD),
+];
+
+final List<Workout> mockWorkouts = [...threeDaySplit, ...rc26];
+
 final List<Routine> mockRoutines = [
-  Routine(id: '1', title: 'Three Day Split', workouts: mockWorkouts),
+  Routine(id: '1', title: 'Three Day Split', workouts: threeDaySplit),
+  Routine(id: '2', title: 'RC26', workouts: rc26),
 ];
