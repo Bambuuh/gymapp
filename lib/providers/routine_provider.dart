@@ -1,12 +1,12 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:gymapp/modules/dummy_data.dart';
 import 'package:gymapp/providers/routine.dart';
 import 'package:gymapp/services/prefs.service.dart';
 
 class RoutineProvider with ChangeNotifier {
   final String prefsKey = 'prefs_routine';
 
-  List<Routine> _routines = [];
-  // List<Routine> _routines = [...mockRoutines];
+  List<Routine> _routines = [...mockRoutines];
 
   RoutineProvider() {
     Prefs.getObjectByKey(prefsKey).then((data) {
