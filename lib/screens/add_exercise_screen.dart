@@ -1,5 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:gymapp/components/button.dart';
+import 'package:gymapp/components/MorphButton.dart';
 import 'package:gymapp/components/text_field.dart';
 import 'package:gymapp/modules/exercise.dart';
 import 'package:gymapp/providers/exercise_provider.dart';

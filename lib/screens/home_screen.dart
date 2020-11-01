@@ -3,6 +3,8 @@ import 'package:gymapp/screens/routine_list_screen.dart';
 import 'package:gymapp/screens/workout_routine_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const String routeName = 'screen/home';
+
   Widget buildOptionButton(String title, Function onPressed) {
     return Container(
       width: double.infinity,

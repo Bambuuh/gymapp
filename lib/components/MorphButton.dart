@@ -11,6 +11,7 @@ class MorphButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: NeumorphicButton(
+        style: NeumorphicStyle(boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(100))),
         margin: margin,
         onPressed: onPressed,
         child: child,
