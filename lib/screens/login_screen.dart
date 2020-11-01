@@ -1,9 +1,11 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/MorphButton.dart';
 import 'package:gymapp/modules/user.dart';
+import 'package:gymapp/providers/user_provider.dart';
 import 'package:gymapp/screens/home_screen.dart';
 import 'package:gymapp/services/database/users.dart';
 import 'package:gymapp/services/sign_in.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -13,16 +15,34 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  Future<void> onPressedGoogleSignIn() async {
+  void navigate(context) {
+    Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+  }
+
+  Future<void> onPressedGoogleSignIn(context) async {
     final fbUser = await signinWithGoogle();
     if (fbUser != null) {
       User user = await getUser(fbUser.uid);
       if (user == null) {
         user = await createUser(fbUser.uid);
       }
-
-      Navigator.of(context).pushNamed(HomeScreen.routeName);
+      Provider.of<UserProvider>(context, listen: false).setUser(user);
+      navigate(context);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      await userProvider.init();
+      final user = userProvider.user;
+      print(user);
+      if (user != null) {
+        navigate(context);
+      }
+    });
   }
 
   @override
@@ -35,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Container(
           child: Center(
             child: MorphButton(
-              onPressed: onPressedGoogleSignIn,
+              onPressed: () => onPressedGoogleSignIn(context),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

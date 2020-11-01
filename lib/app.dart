@@ -1,6 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/providers/exercise_provider.dart';
 import 'package:gymapp/providers/routine_provider.dart';
+import 'package:gymapp/providers/user_provider.dart';
 import 'package:gymapp/providers/workout_provider.dart';
 import 'package:gymapp/screens/add_exercise_screen.dart';
 import 'package:gymapp/screens/add_routine_screen.dart';
@@ -30,6 +31,7 @@ class GymApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RoutineProvider()),
         ChangeNotifierProvider(create: (_) => WorkoutProvider()),
         ChangeNotifierProvider(create: (_) => ExerciseProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: NeumorphicApp(
         title: 'Gym App',
