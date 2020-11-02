@@ -1,4 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:gymapp/database/util.dart';
 
 class Exercise {
   String id;
@@ -24,7 +25,7 @@ class Exercise {
     this.restSeconds = 90,
   }) {
     if (id == null) {
-      this.id = DateTime.now().toString();
+      this.id = getUUID('exercise');
     }
   }
 

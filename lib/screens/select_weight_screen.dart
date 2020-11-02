@@ -1,12 +1,12 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/selection_button.dart';
+import 'package:gymapp/database/exercise_history.dart';
 import 'package:gymapp/modules/exercise.dart';
 import 'package:gymapp/providers/routine_provider.dart';
 import 'package:gymapp/providers/user_provider.dart';
 import 'package:gymapp/screens/rest_screen.dart';
 import 'package:gymapp/util/helpers.dart';
 import 'package:provider/provider.dart';
-import '../services/database/exercise_history.dart';
 
 class SelectWeightScreenArgs {
   Exercise exercise;
@@ -65,7 +65,7 @@ class _SelectWeightScreenState extends State<SelectWeightScreen> {
     Function onPressed = (String weight) {
       args.exercise.completeSet(args.reps, double.parse(weight));
       final userId = Provider.of<UserProvider>(context, listen: false).user.id;
-      createExerciseHistory(userId, args.reps, double.parse(weight));
+      createExerciseHistory(userId, args.reps, double.parse(weight), args.exercise.id);
       Provider.of<RoutineProvider>(context, listen: false).saveData();
       Navigator.of(context).pushNamed(RestScreen.routeName, arguments: args.exercise);
     };

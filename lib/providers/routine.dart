@@ -1,4 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:gymapp/database/routines_db.dart';
+import 'package:gymapp/database/util.dart';
 import 'package:gymapp/providers/workout.dart';
 
 class Routine with ChangeNotifier {
@@ -12,7 +14,7 @@ class Routine with ChangeNotifier {
     @required this.title,
   }) {
     if (id == null) {
-      this.id = DateTime.now().toString();
+      this.id = getUUID(ROUTINES_KEY);
     }
     if (workouts == null) {
       this.workouts = [];

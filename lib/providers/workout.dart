@@ -1,4 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:gymapp/database/util.dart';
 import 'package:gymapp/modules/exercise.dart';
 
 class Workout with ChangeNotifier {
@@ -14,7 +15,7 @@ class Workout with ChangeNotifier {
     @required this.title,
   }) {
     if (id == null) {
-      this.id = DateTime.now().toString();
+      this.id = getUUID('workout');
     }
     if (exercises == null) {
       this.exercises = [];

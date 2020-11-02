@@ -8,14 +8,14 @@ class AddExistingWorkoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final workouts = Provider.of<WorkoutProvider>(context).workouts;
     return Container(
-      child: Column(
-        children: workouts
-            .map((workout) => WorkoutItem(
-                  workout: workout,
-                  onPressed: () {},
-                ))
-            .toList(),
-      ),
-    );
+        // child: Column(
+        //   children: workouts
+        //       .map((workout) => WorkoutItem(
+        //             workout: workout,
+        //             onPressed: () {},
+        //           ))
+        //       .toList(),
+        // ),
+        );
   }
 }
