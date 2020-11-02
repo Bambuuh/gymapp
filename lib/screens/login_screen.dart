@@ -38,7 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       await userProvider.init();
       final user = userProvider.user;
-      print(user);
       if (user != null) {
         navigate(context);
       }

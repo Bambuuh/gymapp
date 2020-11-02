@@ -32,8 +32,10 @@ class Exercise {
     lastWeight = newWeight;
   }
 
-  void completeSet() {
+  void completeSet(int reps, double weight) {
     completedSets++;
+    lastReps = reps;
+    lastWeight = weight;
   }
 
   Map<String, dynamic> toJson() {

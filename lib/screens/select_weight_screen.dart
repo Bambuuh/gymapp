@@ -2,9 +2,18 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/selection_button.dart';
 import 'package:gymapp/modules/exercise.dart';
 import 'package:gymapp/providers/routine_provider.dart';
+import 'package:gymapp/providers/user_provider.dart';
 import 'package:gymapp/screens/rest_screen.dart';
 import 'package:gymapp/util/helpers.dart';
 import 'package:provider/provider.dart';
+import '../services/database/exercise_history.dart';
+
+class SelectWeightScreenArgs {
+  Exercise exercise;
+  int reps;
+
+  SelectWeightScreenArgs(this.exercise, this.reps);
+}
 
 class SelectWeightScreen extends StatefulWidget {
   static final String routeName = 'screen/select_weights_screen';
@@ -24,8 +33,8 @@ class _SelectWeightScreenState extends State<SelectWeightScreen> {
   initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final exercise = ModalRoute.of(context).settings.arguments as Exercise;
-      int index = weights.indexOf(exercise.lastWeight);
+      final args = ModalRoute.of(context).settings.arguments as SelectWeightScreenArgs;
+      int index = weights.indexOf(args.exercise.lastWeight);
       if (index == -1) {
         return;
       }
@@ -50,14 +59,15 @@ class _SelectWeightScreenState extends State<SelectWeightScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final exercise = ModalRoute.of(context).settings.arguments as Exercise;
-    setWeights(exercise);
+    final args = ModalRoute.of(context).settings.arguments as SelectWeightScreenArgs;
+    setWeights(args.exercise);
 
-    Function onPressed = (String weights) {
-      exercise.lastWeight = double.parse(weights);
-      exercise.completeSet();
+    Function onPressed = (String weight) {
+      args.exercise.completeSet(args.reps, double.parse(weight));
+      final userId = Provider.of<UserProvider>(context, listen: false).user.id;
+      createExerciseHistory(userId, args.reps, double.parse(weight));
       Provider.of<RoutineProvider>(context, listen: false).saveData();
-      Navigator.of(context).pushNamed(RestScreen.routeName, arguments: exercise);
+      Navigator.of(context).pushNamed(RestScreen.routeName, arguments: args.exercise);
     };
 
     return Scaffold(

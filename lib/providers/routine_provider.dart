@@ -11,7 +11,7 @@ class RoutineProvider with ChangeNotifier {
   RoutineProvider() {
     Prefs.getObjectByKey(prefsKey).then((data) {
       if (data != null) {
-        _routines = List<Routine>.from(data.map((e) => Routine.fromJson(e)).toList());
+        // _routines = List<Routine>.from(data.map((e) => Routine.fromJson(e)).toList());
         notifyListeners();
       }
     });

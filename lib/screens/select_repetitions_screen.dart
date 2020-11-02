@@ -49,8 +49,10 @@ class _SelectRepetitionsScreenState extends State<SelectRepetitionsScreen> {
     setRepetitionList(exercise);
 
     Function onPressed = (String reps) {
-      exercise.lastReps = int.parse(reps);
-      Navigator.of(context).pushNamed(SelectWeightScreen.routeName, arguments: exercise);
+      Navigator.of(context).pushNamed(
+        SelectWeightScreen.routeName,
+        arguments: SelectWeightScreenArgs(exercise, int.parse(reps)),
+      );
     };
 
     return Scaffold(
