@@ -2,9 +2,11 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/MorphButton.dart';
 import 'package:gymapp/database/routines_db.dart';
 import 'package:gymapp/database/users.dart';
+import 'package:gymapp/database/workout_db.dart';
 import 'package:gymapp/modules/user.dart';
 import 'package:gymapp/providers/routine_provider.dart';
 import 'package:gymapp/providers/user_provider.dart';
+import 'package:gymapp/providers/workout_provider.dart';
 import 'package:gymapp/screens/home_screen.dart';
 import 'package:gymapp/services/sign_in.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +19,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  void fetchUserData(String userId) async {
-    final routines = await getRoutines(userId);
+  Future<void> fetchUserData(String userId) async {
+    final routines = await getAllRoutines(userId);
+    final workouts = await getAllWorkouts(userId);
     routines.forEach((routine) {
       Provider.of<RoutineProvider>(context, listen: false).addRoutine(routine);
+    });
+    workouts.forEach((workout) {
+      Provider.of<WorkoutProvider>(context, listen: false).addWorkout(workout);
     });
   }
 
@@ -49,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await userProvider.init();
       final user = userProvider.user;
       if (user != null) {
-        fetchUserData(user.id);
+        await fetchUserData(user.id);
         navigate(context);
       }
     });

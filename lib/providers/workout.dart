@@ -76,7 +76,7 @@ class Workout with ChangeNotifier {
     };
   }
 
-  static fromJson(json) {
+  static Workout fromJson(json) {
     return Workout(
       id: json['id'],
       title: json['title'],

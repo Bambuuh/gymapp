@@ -11,13 +11,12 @@ CollectionReference _getCollection(String userId) {
   return users.doc(userId).collection(ROUTINES_KEY);
 }
 
-Future<void> addRoutine(String userId, Routine routine) async {
+Future<void> setRoutine(String userId, Routine routine) async {
   final json = routine.toJson();
   await _getCollection(userId).doc(routine.id).set(json);
 }
 
-Future<List<Routine>> getRoutines(String userId) async {
+Future<List<Routine>> getAllRoutines(String userId) async {
   final snapshot = await _getCollection(userId).get();
-
   return snapshot.docs.map((e) => Routine.fromJson(e)).toList();
 }

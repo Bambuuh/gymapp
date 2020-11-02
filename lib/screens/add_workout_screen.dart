@@ -1,7 +1,10 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/MorphButton.dart';
 import 'package:gymapp/components/text_field.dart';
+import 'package:gymapp/database/routines_db.dart';
+import 'package:gymapp/database/workout_db.dart';
 import 'package:gymapp/providers/routine_provider.dart';
+import 'package:gymapp/providers/user_provider.dart';
 import 'package:gymapp/providers/workout.dart';
 import 'package:gymapp/providers/workout_provider.dart';
 import 'package:gymapp/screens/workout_screen.dart';
@@ -26,6 +29,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   void onPressNewWorkout(context) {
     final workoutProvider = Provider.of<WorkoutProvider>(context, listen: false);
     final routineProvider = Provider.of<RoutineProvider>(context, listen: false);
+    final userId = Provider.of<UserProvider>(context, listen: false).user.id;
 
     final String routineId = ModalRoute.of(context).settings.arguments;
     final newWorkout = Workout(title: titleController.text);
@@ -33,6 +37,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     final routine = routineProvider.findById(routineId);
     workoutProvider.addWorkout(newWorkout);
     routine.addWorkout(newWorkout);
+    setRoutine(userId, routine);
+    setWorkout(userId, newWorkout);
 
     Navigator.of(context).pushReplacementNamed(
       WorkoutScreen.routeName,
