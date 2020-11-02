@@ -1,11 +1,16 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/MorphButton.dart';
+import 'package:gymapp/database/exercies_db.dart';
 import 'package:gymapp/database/routines_db.dart';
 import 'package:gymapp/database/users.dart';
 import 'package:gymapp/database/workout_db.dart';
+import 'package:gymapp/modules/exercise.dart';
 import 'package:gymapp/modules/user.dart';
+import 'package:gymapp/providers/exercise_provider.dart';
+import 'package:gymapp/providers/routine.dart';
 import 'package:gymapp/providers/routine_provider.dart';
 import 'package:gymapp/providers/user_provider.dart';
+import 'package:gymapp/providers/workout.dart';
 import 'package:gymapp/providers/workout_provider.dart';
 import 'package:gymapp/screens/home_screen.dart';
 import 'package:gymapp/services/sign_in.dart';
@@ -20,13 +25,19 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   Future<void> fetchUserData(String userId) async {
-    final routines = await getAllRoutines(userId);
-    final workouts = await getAllWorkouts(userId);
+    final promises = await Future.wait([getAllRoutines(userId), getAllWorkouts(userId), getAllExercises(userId)]);
+    final result = promises.toList();
+    final routines = result[0] as List<Routine>;
+    final workouts = result[1] as List<Workout>;
+    final exercises = result[2] as List<Exercise>;
     routines.forEach((routine) {
       Provider.of<RoutineProvider>(context, listen: false).addRoutine(routine);
     });
     workouts.forEach((workout) {
       Provider.of<WorkoutProvider>(context, listen: false).addWorkout(workout);
+    });
+    exercises.forEach((exercise) {
+      Provider.of<ExerciseProvider>(context, listen: false).addExercise(exercise);
     });
   }
 

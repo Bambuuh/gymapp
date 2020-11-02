@@ -29,7 +29,8 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
       floatingActionButton: NeumorphicButton(
         style: NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
         onPressed: () {
-          Navigator.of(context).pushNamed(AddExerciseScreen.routeName, arguments: workout.id).then(onBack);
+          final args = AddExerciseScreenArgs(workout.id, routine.id);
+          Navigator.of(context).pushNamed(AddExerciseScreen.routeName, arguments: args).then(onBack);
         },
         tooltip: 'Add workout',
         child: Icon(Icons.add),
