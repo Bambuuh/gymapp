@@ -42,7 +42,7 @@ class ExerciseItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(exercise.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text(exercise.title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
             buildRepetitions(),
           ],
         ),
@@ -50,7 +50,7 @@ class ExerciseItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text('Last weight: ${removeDecimalZeroFormat(exercise.lastWeight)} kg'),
+            Text('${removeDecimalZeroFormat(exercise.lastWeight)} kg'),
             SetCounter(exercise),
           ],
         ),

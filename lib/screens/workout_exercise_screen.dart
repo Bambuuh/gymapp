@@ -120,7 +120,7 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
             )
           ],
         ),
-        body: ExerciseList(workout, onPressExercise),
+        body: SingleChildScrollView(child: ExerciseList(workout, onPressExercise)),
       ),
     );
   }
