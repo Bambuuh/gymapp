@@ -20,9 +20,9 @@ import 'package:gymapp/screens/workout_workout_screen.dart';
 import 'package:provider/provider.dart';
 
 class GymApp extends StatelessWidget {
-  final Color base = Color(0xff333a42);
-  final Color light = Color(0xff4D545C);
-  final Color dark = Color(0xff1A2129);
+  // final Color base = Color(0xff333a42);
+  // final Color light = Color(0xff4D545C);
+  // final Color dark = Color(0xff1A2129);
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +38,11 @@ class GymApp extends StatelessWidget {
         theme: NeumorphicThemeData(
           intensity: 0.8,
           lightSource: LightSource.topLeft,
-          baseColor: base,
-          shadowLightColor: light,
-          shadowDarkColor: dark,
-          shadowLightColorEmboss: light,
-          shadowDarkColorEmboss: dark,
+          // baseColor: base,
+          // shadowLightColor: light,
+          // shadowDarkColor: dark,
+          // shadowLightColorEmboss: light,
+          // shadowDarkColorEmboss: dark,
         ),
         home: LoginScreen(),
         routes: {

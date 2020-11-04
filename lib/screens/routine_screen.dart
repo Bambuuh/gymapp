@@ -37,7 +37,9 @@ class _RoutineScreenState extends State<RoutineScreen> {
       appBar: NeumorphicAppBar(
         title: Text(routine.title),
       ),
-      body: Container(child: WorkoutList(routine.workouts, onPressItem)),
+      body: SingleChildScrollView(
+        child: WorkoutList(routine.workouts, onPressItem),
+      ),
       floatingActionButton: NeumorphicButton(
         style: NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
         onPressed: () {

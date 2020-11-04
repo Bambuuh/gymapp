@@ -25,7 +25,9 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
       appBar: NeumorphicAppBar(
         title: Text(workout.title),
       ),
-      body: ExerciseList(workout, () {}),
+      body: SingleChildScrollView(
+        child: ExerciseList(workout, () {}),
+      ),
       floatingActionButton: NeumorphicButton(
         style: NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
         onPressed: () {
