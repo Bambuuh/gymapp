@@ -30,15 +30,18 @@ class _LoginScreenState extends State<LoginScreen> {
     final routines = result[0] as List<Routine>;
     final workouts = result[1] as List<Workout>;
     final exercises = result[2] as List<Exercise>;
-    routines.forEach((routine) {
-      Provider.of<RoutineProvider>(context, listen: false).addRoutine(routine);
-    });
-    workouts.forEach((workout) {
-      Provider.of<WorkoutProvider>(context, listen: false).addWorkout(workout);
-    });
-    exercises.forEach((exercise) {
-      Provider.of<ExerciseProvider>(context, listen: false).addExercise(exercise);
-    });
+    Provider.of<RoutineProvider>(context, listen: false).setRoutines(routines);
+    Provider.of<WorkoutProvider>(context, listen: false).setWorkouts(workouts);
+    Provider.of<ExerciseProvider>(context, listen: false).setExercises(exercises);
+    // routines.forEach((routine) {
+    //   Provider.of<RoutineProvider>(context, listen: false).addRoutine(routine);
+    // });
+    // workouts.forEach((workout) {
+    //   Provider.of<WorkoutProvider>(context, listen: false).addWorkout(workout);
+    // });
+    // exercises.forEach((exercise) {
+    //   Provider.of<ExerciseProvider>(context, listen: false).addExercise(exercise);
+    // });
   }
 
   void navigate(context) {

@@ -10,6 +10,11 @@ class WorkoutProvider with ChangeNotifier {
     return [..._workouts];
   }
 
+  void setWorkouts(List<Workout> workouts) {
+    _workouts = [...workouts];
+    notifyListeners();
+  }
+
   void addWorkout(Workout workout) {
     _workouts.add(workout);
     notifyListeners();

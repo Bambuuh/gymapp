@@ -8,6 +8,11 @@ class ExerciseProvider with ChangeNotifier {
     return [..._exercises];
   }
 
+  void setExercises(List<Exercise> exercises) {
+    _exercises = [...exercises];
+    notifyListeners();
+  }
+
   void addExercise(Exercise exercise) {
     _exercises.add(exercise);
     notifyListeners();

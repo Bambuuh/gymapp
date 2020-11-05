@@ -25,6 +25,11 @@ class RoutineProvider with ChangeNotifier {
     return [..._routines];
   }
 
+  void setRoutines(List<Routine> routines) {
+    _routines = [...routines];
+    notifyListeners();
+  }
+
   void addRoutine(Routine routine) {
     _routines.add(routine);
     notifyListeners();
