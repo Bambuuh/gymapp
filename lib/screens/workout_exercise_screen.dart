@@ -4,8 +4,9 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/MorphButton.dart';
 import 'package:gymapp/components/exercise_list.dart';
 import 'package:gymapp/modules/exercise.dart';
-import 'package:gymapp/providers/routine_provider.dart';
+import 'package:gymapp/providers/exercise_provider.dart';
 import 'package:gymapp/providers/workout.dart';
+import 'package:gymapp/providers/workout_provider.dart';
 import 'package:gymapp/screens/select_repetitions_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -24,9 +25,7 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final args = ModalRoute.of(context).settings.arguments as Map;
-      final routine = Provider.of<RoutineProvider>(context, listen: false).findById(args['routineId']);
-      final workout = routine.findWorkoutById(args['workoutId']);
+      final workout = Provider.of<WorkoutProvider>(context, listen: false).currentWorkout;
       if (workout.isRunning && !workout.isPaused) {
         startTimer(workout);
         setPrettyTime(workout);
@@ -72,17 +71,14 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context).settings.arguments as Map;
-    final routine = Provider.of<RoutineProvider>(context).findById(args['routineId']);
-    final workout = routine.findWorkoutById(args['workoutId']);
+    final workout = Provider.of<WorkoutProvider>(context).currentWorkout;
 
     void onPressExercise(Exercise exercise) {
       if (!workout.isRunning) {
         startWorkout(workout);
       }
-      Navigator.of(context)
-          .pushNamed(SelectRepetitionsScreen.routeName, arguments: exercise)
-          .then((value) => setState(() {}));
+      Provider.of<ExerciseProvider>(context, listen: false).setCurrentExercise(exercise);
+      Navigator.of(context).pushNamed(SelectRepetitionsScreen.routeName).then((value) => setState(() {}));
     }
 
     void onPressStopWorkout() {

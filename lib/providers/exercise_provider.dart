@@ -3,13 +3,23 @@ import 'package:gymapp/modules/exercise.dart';
 
 class ExerciseProvider with ChangeNotifier {
   List<Exercise> _exercises = [];
+  Exercise _currentExercise;
 
   List<Exercise> get exercises {
     return [..._exercises];
   }
 
+  Exercise get currentExercise {
+    return _currentExercise;
+  }
+
   void setExercises(List<Exercise> exercises) {
     _exercises = [...exercises];
+    notifyListeners();
+  }
+
+  void setCurrentExercise(Exercise exercise) {
+    _currentExercise = exercise;
     notifyListeners();
   }
 

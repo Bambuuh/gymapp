@@ -8,8 +8,12 @@ import '../providers/routine_provider.dart';
 class WorkoutRoutineScreen extends StatelessWidget {
   static final String routeName = 'screen/start_workout_routine_screen';
 
-  void onPressItem(context, String id) {
-    Navigator.pushNamed(context, WorkoutWorkoutScreen.routeName, arguments: id);
+  void onPressItem(context, String routineId) {
+    var routineProvider = Provider.of<RoutineProvider>(context, listen: false);
+    var routine = routineProvider.findById(routineId);
+    routineProvider.setCurrentRoutine(routine);
+
+    Navigator.pushNamed(context, WorkoutWorkoutScreen.routeName);
   }
 
   @override

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/MorphButton.dart';
 import 'package:gymapp/components/text_field.dart';
-import 'package:gymapp/database/exercies_db.dart';
+import 'package:gymapp/database/exercises_db.dart';
 import 'package:gymapp/database/routines_db.dart';
 import 'package:gymapp/database/workout_db.dart';
 import 'package:gymapp/modules/exercise.dart';
@@ -86,9 +86,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     workout.addExercise(newExercise);
     routine.addWorkout(workout);
 
-    setExercise(userId, newExercise);
-    setWorkout(userId, workout);
-    setRoutine(userId, routine);
+    ExercisesDB.setExercise(userId, newExercise);
+    WorkoutsDB.setWorkout(userId, workout);
+    RoutinesDB.setRoutine(userId, routine);
 
     Navigator.of(context).pop();
   }

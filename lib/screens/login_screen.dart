@@ -1,6 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/MorphButton.dart';
-import 'package:gymapp/database/exercies_db.dart';
+import 'package:gymapp/database/exercises_db.dart';
 import 'package:gymapp/database/routines_db.dart';
 import 'package:gymapp/database/users.dart';
 import 'package:gymapp/database/workout_db.dart';
@@ -25,7 +25,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   Future<void> fetchUserData(String userId) async {
-    final promises = await Future.wait([getAllRoutines(userId), getAllWorkouts(userId), getAllExercises(userId)]);
+    final promises = await Future.wait([
+      RoutinesDB.getAllRoutines(userId),
+      WorkoutsDB.getAllWorkouts(userId),
+      ExercisesDB.getAllExercises(userId),
+    ]);
     final result = promises.toList();
     final routines = result[0] as List<Routine>;
     final workouts = result[1] as List<Workout>;

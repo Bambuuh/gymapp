@@ -37,8 +37,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     final routine = routineProvider.findById(routineId);
     workoutProvider.addWorkout(newWorkout);
     routine.addWorkout(newWorkout);
-    setRoutine(userId, routine);
-    setWorkout(userId, newWorkout);
+    RoutinesDB.setRoutine(userId, routine);
+    WorkoutsDB.setWorkout(userId, newWorkout);
 
     Navigator.of(context).pushReplacementNamed(
       WorkoutScreen.routeName,

@@ -7,15 +7,17 @@ CollectionReference users = fireStore.collection(USERS_KEY);
 
 const String EXERCISE_HISTORY_KEY = 'exerciseHistories';
 
-CollectionReference _getCollection(String userId) {
-  return users.doc(userId).collection(EXERCISE_HISTORY_KEY);
-}
+class ExerciseHistoryDB {
+  static CollectionReference _getCollection(String userId) {
+    return users.doc(userId).collection(EXERCISE_HISTORY_KEY);
+  }
 
-Future<void> createExerciseHistory(String userId, ExerciseHistory exerciseHistory) async {
-  _getCollection(userId).add(exerciseHistory.toJson());
-}
+  static Future<void> createExerciseHistory(String userId, ExerciseHistory exerciseHistory) async {
+    _getCollection(userId).add(exerciseHistory.toJson());
+  }
 
-Future<List<ExerciseHistory>> getExerciseHistory(String userId) async {
-  final snapshot = await _getCollection(userId).get();
-  return snapshot.docs.map((e) => ExerciseHistory.fromJson(e)).toList();
+  static Future<List<ExerciseHistory>> getExerciseHistory(String userId) async {
+    final snapshot = await _getCollection(userId).get();
+    return snapshot.docs.map((e) => ExerciseHistory.fromJson(e)).toList();
+  }
 }

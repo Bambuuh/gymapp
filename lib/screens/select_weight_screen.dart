@@ -3,6 +3,7 @@ import 'package:gymapp/components/selection_button.dart';
 import 'package:gymapp/database/exercise_history_db.dart';
 import 'package:gymapp/modules/exercise.dart';
 import 'package:gymapp/modules/exercise_history.dart';
+import 'package:gymapp/providers/exercise_provider.dart';
 import 'package:gymapp/providers/routine_provider.dart';
 import 'package:gymapp/providers/user_provider.dart';
 import 'package:gymapp/screens/rest_screen.dart';
@@ -10,10 +11,11 @@ import 'package:gymapp/util/helpers.dart';
 import 'package:provider/provider.dart';
 
 class SelectWeightScreenArgs {
-  Exercise exercise;
   int reps;
 
-  SelectWeightScreenArgs(this.exercise, this.reps);
+  SelectWeightScreenArgs(
+    this.reps,
+  );
 }
 
 class SelectWeightScreen extends StatefulWidget {
@@ -34,8 +36,8 @@ class _SelectWeightScreenState extends State<SelectWeightScreen> {
   initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final args = ModalRoute.of(context).settings.arguments as SelectWeightScreenArgs;
-      int index = weights.indexOf(args.exercise.lastWeight);
+      var exercise = Provider.of<ExerciseProvider>(context, listen: false).currentExercise;
+      int index = weights.indexOf(exercise.lastWeight);
       if (index == -1) {
         return;
       }
@@ -61,15 +63,17 @@ class _SelectWeightScreenState extends State<SelectWeightScreen> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments as SelectWeightScreenArgs;
-    setWeights(args.exercise);
+    var exercise = Provider.of<ExerciseProvider>(context, listen: false).currentExercise;
+    setWeights(exercise);
 
     Function onPressed = (String weight) {
-      args.exercise.completeSet(args.reps, double.parse(weight));
+      exercise.completeSet(args.reps, double.parse(weight));
       final userId = Provider.of<UserProvider>(context, listen: false).user.id;
-      var newExerciseHistory = ExerciseHistory(args.exercise.id, args.reps, double.parse(weight));
-      createExerciseHistory(userId, newExerciseHistory);
+      var newExerciseHistory = ExerciseHistory(exercise.id, args.reps, double.parse(weight));
+      ExerciseHistoryDB.createExerciseHistory(userId, newExerciseHistory);
+      // RoutinesDB.setExerciseResult(userId, routineId, workoutId, exerciseId, reps, weight)
       Provider.of<RoutineProvider>(context, listen: false).saveData();
-      Navigator.of(context).pushNamed(RestScreen.routeName, arguments: args.exercise);
+      Navigator.of(context).pushNamed(RestScreen.routeName, arguments: exercise);
     };
 
     return Scaffold(

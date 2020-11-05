@@ -28,7 +28,7 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
     final newRoutine = Routine(title: titleController.text.toString());
     Provider.of<RoutineProvider>(context, listen: false).addRoutine(newRoutine);
     final userId = Provider.of<UserProvider>(context, listen: false).user.id;
-    setRoutine(userId, newRoutine);
+    RoutinesDB.setRoutine(userId, newRoutine);
     Navigator.of(context).pushReplacementNamed(
       RoutineScreen.routeName,
       arguments: newRoutine.id,

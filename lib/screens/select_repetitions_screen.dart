@@ -1,7 +1,9 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/components/selection_button.dart';
 import 'package:gymapp/modules/exercise.dart';
+import 'package:gymapp/providers/exercise_provider.dart';
 import 'package:gymapp/screens/select_weight_screen.dart';
+import 'package:provider/provider.dart';
 
 class SelectRepetitionsScreen extends StatefulWidget {
   static final String routeName = 'screen/select_repetitions_screen';
@@ -19,7 +21,7 @@ class _SelectRepetitionsScreenState extends State<SelectRepetitionsScreen> {
   initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final exercise = ModalRoute.of(context).settings.arguments as Exercise;
+      final exercise = Provider.of<ExerciseProvider>(context, listen: false).currentExercise;
       int index = reps.indexOf(exercise.lastReps);
       if (index == -1) {
         return;
@@ -45,13 +47,13 @@ class _SelectRepetitionsScreenState extends State<SelectRepetitionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final exercise = ModalRoute.of(context).settings.arguments as Exercise;
+    final exercise = Provider.of<ExerciseProvider>(context, listen: false).currentExercise;
     setRepetitionList(exercise);
 
     Function onPressed = (String reps) {
       Navigator.of(context).pushNamed(
         SelectWeightScreen.routeName,
-        arguments: SelectWeightScreenArgs(exercise, int.parse(reps)),
+        arguments: SelectWeightScreenArgs(int.parse(reps)),
       );
     };
 

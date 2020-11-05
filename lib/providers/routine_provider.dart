@@ -5,8 +5,8 @@ import 'package:gymapp/services/prefs.service.dart';
 
 class RoutineProvider with ChangeNotifier {
   final String prefsKey = 'prefs_routine';
-
   List<Routine> _routines = [...mockRoutines];
+  Routine _currentRoutine;
 
   RoutineProvider() {
     Prefs.getObjectByKey(prefsKey).then((data) {
@@ -15,6 +15,15 @@ class RoutineProvider with ChangeNotifier {
         notifyListeners();
       }
     });
+  }
+
+  void setCurrentRoutine(Routine routine) {
+    _currentRoutine = routine;
+    notifyListeners();
+  }
+
+  Routine get currentRoutine {
+    return _currentRoutine;
   }
 
   void saveData() {
