@@ -11,7 +11,7 @@ class WorkoutList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: workouts.map((workout) => WorkoutItem(workout, onPressed)).toList(),
+      children: workouts.map((workout) => WorkoutItem(workout: workout, onPressed: onPressed)).toList(),
     );
   }
 }

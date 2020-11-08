@@ -1,12 +1,9 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:gymapp/components/workout_item.dart';
-import 'package:gymapp/providers/workout_provider.dart';
-import 'package:provider/provider.dart';
 
 class AddExistingWorkoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final workouts = Provider.of<WorkoutProvider>(context).workouts;
+    // final workouts = Provider.of<WorkoutProvider>(context).workouts;
     return Container(
         // child: Column(
         //   children: workouts

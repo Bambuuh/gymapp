@@ -18,7 +18,8 @@ class _RoutineListScreenState extends State<RoutineListScreen> {
   }
 
   void onPressItem(context, String id) {
-    Navigator.pushNamed(context, RoutineScreen.routeName, arguments: id);
+    final routine = Provider.of<RoutineProvider>(context, listen: false).findById(id);
+    Navigator.pushNamed(context, RoutineScreen.routeName, arguments: RoutineScreenArgs(routine));
   }
 
   @override
