@@ -175,6 +175,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final node = FocusScope.of(context);
     return Container(
       child: Scaffold(
         appBar: NeumorphicAppBar(title: Text('Add Exercise')),
@@ -189,12 +190,16 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                   margin: EdgeInsets.only(bottom: 32),
                 ),
                 NeumorphicTextField(
+                  textInputAction: TextInputAction.next,
+                  onEditingComplete: () => node.nextFocus(),
                   autoFocus: true,
                   controller: titleController,
                   placeholder: 'Title',
                   margin: inputMargin,
                 ),
                 NeumorphicTextField(
+                  textInputAction: TextInputAction.next,
+                  onEditingComplete: () => node.nextFocus(),
                   controller: setController,
                   placeholder: 'Sets',
                   keyboardType: TextInputType.number,

@@ -6,6 +6,8 @@ class NeumorphicTextField extends StatefulWidget {
   final EdgeInsets margin;
   final TextInputType keyboardType;
   final bool autoFocus;
+  final TextInputAction textInputAction;
+  final Function() onEditingComplete;
 
   NeumorphicTextField({
     @required this.controller,
@@ -13,6 +15,8 @@ class NeumorphicTextField extends StatefulWidget {
     this.margin,
     this.keyboardType,
     this.autoFocus = false,
+    this.textInputAction,
+    this.onEditingComplete,
   });
 
   @override
@@ -28,6 +32,8 @@ class _NeumorphicTextFieldState extends State<NeumorphicTextField> {
       child: Neumorphic(
         padding: EdgeInsets.symmetric(horizontal: 24),
         child: TextField(
+          textInputAction: widget.textInputAction,
+          onEditingComplete: widget.onEditingComplete,
           autofocus: widget.autoFocus,
           keyboardType: widget.keyboardType,
           controller: widget.controller,
