@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/modules/dummy_data.dart';
+import 'package:gymapp/modules/exercise.dart';
 import 'package:gymapp/providers/routine.dart';
 import 'package:gymapp/services/prefs.service.dart';
 
@@ -36,6 +37,20 @@ class RoutineProvider with ChangeNotifier {
 
   void setRoutines(List<Routine> routines) {
     _routines = [...routines];
+    notifyListeners();
+  }
+
+  void updateExercises(List<Exercise> updatedExercises) {
+    _routines.forEach((routine) {
+      routine.workouts.forEach((workout) {
+        workout.exercises.forEach((exercise) {
+          var updated = updatedExercises.firstWhere((e) => e.id == exercise.id);
+          if (updated != null) {
+            exercise = Exercise.fromJson(updated.toJson());
+          }
+        });
+      });
+    });
     notifyListeners();
   }
 

@@ -37,15 +37,6 @@ class _LoginScreenState extends State<LoginScreen> {
     Provider.of<RoutineProvider>(context, listen: false).setRoutines(routines);
     Provider.of<WorkoutProvider>(context, listen: false).setWorkouts(workouts);
     Provider.of<ExerciseProvider>(context, listen: false).setExercises(exercises);
-    // routines.forEach((routine) {
-    //   Provider.of<RoutineProvider>(context, listen: false).addRoutine(routine);
-    // });
-    // workouts.forEach((workout) {
-    //   Provider.of<WorkoutProvider>(context, listen: false).addWorkout(workout);
-    // });
-    // exercises.forEach((exercise) {
-    //   Provider.of<ExerciseProvider>(context, listen: false).addExercise(exercise);
-    // });
   }
 
   void navigate(context) {

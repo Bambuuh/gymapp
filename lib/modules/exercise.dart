@@ -49,7 +49,6 @@ class Exercise {
       'maxReps': maxReps,
       'lastReps': lastReps,
       'lastWeight': lastWeight,
-      'completedSets': 0,
       'restSeconds': restSeconds
     };
   }
