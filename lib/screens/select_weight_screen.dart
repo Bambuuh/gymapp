@@ -7,7 +7,8 @@ import 'package:gymapp/modules/exercise_history.dart';
 import 'package:gymapp/providers/exercise_provider.dart';
 import 'package:gymapp/providers/routine_provider.dart';
 import 'package:gymapp/providers/user_provider.dart';
-import 'package:gymapp/screens/rest_screen.dart';
+import 'package:gymapp/providers/workout_provider.dart';
+import 'package:gymapp/screens/workout_exercise_screen.dart';
 import 'package:gymapp/util/helpers.dart';
 import 'package:provider/provider.dart';
 
@@ -75,7 +76,8 @@ class _SelectWeightScreenState extends State<SelectWeightScreen> {
       RoutinesDB.setRoutine(userId, routine);
       ExerciseHistoryDB.createExerciseHistory(userId, newExerciseHistory);
       Provider.of<RoutineProvider>(context, listen: false).saveData();
-      Navigator.of(context).pushNamed(RestScreen.routeName, arguments: exercise);
+      Provider.of<WorkoutProvider>(context, listen: false).currentWorkout.startRestTimer(exercise.restSeconds);
+      Navigator.of(context).popUntil((route) => route.settings.name == WorkoutExerciseScreen.routeName);
     };
 
     return Scaffold(

@@ -41,12 +41,19 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
     }
   }
 
-  void setPrettyTime(Workout workout) {
+  String getPrettyTime({Duration duration, bool hours = true}) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String twoDigitMinutes = twoDigits(workout.timeElapsed.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(workout.timeElapsed.inSeconds.remainder(60));
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    if (hours) {
+      return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+    }
+    return "$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  void setPrettyTime(Workout workout) {
     setState(() {
-      prettySessionTime = "${twoDigits(workout.timeElapsed.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+      prettySessionTime = getPrettyTime(duration: workout.timeElapsed);
     });
   }
 
@@ -71,6 +78,58 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
     }
   }
 
+  Widget buildWorkoutTitle(Workout workout) {
+    if (!workout.isRunning) {
+      return Text('Select Exercise');
+    } else if (workout.isResting) {
+      return Text('Rest: ${getPrettyTime(duration: workout.restRemaining, hours: false)}');
+    }
+
+    return Text(prettySessionTime);
+  }
+
+  List<Widget> buildActions(Workout workout) {
+    void onPressStopWorkout(Workout workout) {
+      prettySessionTime = '00:00:00';
+      workout.stopWorkout();
+      timer.cancel();
+      setState(() {});
+    }
+
+    if (workout.isResting) {
+      return [
+        MorphButton(
+          child: Container(
+            alignment: Alignment.center,
+            child: Text('Cancel'),
+          ),
+          onPressed: workout.cancelRestTimer,
+        )
+      ];
+    }
+
+    return [
+      Container(
+        child: MorphButton(
+          child: Container(
+            alignment: Alignment.center,
+            child: Text('Reset'),
+          ),
+          onPressed: () => onPressStopWorkout(workout),
+        ),
+      ),
+      Consumer<Workout>(
+        builder: (_, workout, child) => MorphButton(
+          child: Container(
+            alignment: Alignment.center,
+            child: !workout.isPaused && workout.isRunning ? Text('Pause') : Text('Start'),
+          ),
+          onPressed: () => onPressTopRight(workout),
+        ),
+      )
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final workout = Provider.of<WorkoutProvider>(context).currentWorkout;
@@ -83,40 +142,14 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
       Navigator.of(context).pushNamed(SelectRepetitionsScreen.routeName).then((value) => setState(() {}));
     }
 
-    void onPressStopWorkout() {
-      prettySessionTime = '00:00:00';
-      workout.stopWorkout();
-      timer.cancel();
-      setState(() {});
-    }
-
     return ChangeNotifierProvider<Workout>.value(
       value: workout,
       child: Scaffold(
         appBar: NeumorphicAppBar(
           title: Consumer<Workout>(
-            builder: (_, workout, child) => workout.isRunning ? Text(prettySessionTime) : Text('Select Exercise'),
+            builder: (_, workout, child) => buildWorkoutTitle(workout),
           ),
-          actions: [
-            Container(
-              child: MorphButton(
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text('Reset'),
-                ),
-                onPressed: onPressStopWorkout,
-              ),
-            ),
-            Consumer<Workout>(
-              builder: (_, workout, child) => MorphButton(
-                child: Container(
-                  alignment: Alignment.center,
-                  child: !workout.isPaused && workout.isRunning ? Text('Pause') : Text('Start'),
-                ),
-                onPressed: () => onPressTopRight(workout),
-              ),
-            )
-          ],
+          actions: buildActions(workout),
         ),
         body: SingleChildScrollView(child: ExerciseList(workout, onPressExercise)),
       ),

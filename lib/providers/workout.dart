@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/database/util.dart';
 import 'package:gymapp/modules/exercise.dart';
@@ -7,7 +9,10 @@ class Workout with ChangeNotifier {
   String title;
   List<Exercise> exercises;
   bool _isRunning = false;
-  Stopwatch _stopWatch = Stopwatch();
+  Stopwatch _workoutStopWatch = Stopwatch();
+  Stopwatch _restStopWatch = Stopwatch();
+  Timer _restTimer;
+  int _totalRestSeconds;
 
   Workout({
     this.id,
@@ -27,21 +32,29 @@ class Workout with ChangeNotifier {
   }
 
   Duration get timeElapsed {
-    return _stopWatch.elapsed;
+    return _workoutStopWatch.elapsed;
+  }
+
+  Duration get restRemaining {
+    return Duration(seconds: _totalRestSeconds - _restStopWatch.elapsed.inSeconds);
   }
 
   bool get isRunning {
-    return _isRunning && _stopWatch.elapsedMilliseconds > 0;
+    return _isRunning && _workoutStopWatch.elapsedMilliseconds > 0;
   }
 
   bool get isPaused {
-    return _stopWatch.elapsedMilliseconds > 0 && !_stopWatch.isRunning;
+    return _workoutStopWatch.elapsedMilliseconds > 0 && !_workoutStopWatch.isRunning;
+  }
+
+  bool get isResting {
+    return _restStopWatch.isRunning;
   }
 
   void _resetWorkout() {
     _isRunning = false;
-    _stopWatch.reset();
-    _stopWatch.stop();
+    _workoutStopWatch.reset();
+    _workoutStopWatch.stop();
     exercises.forEach((exercise) {
       exercise.completedSets = 0;
     });
@@ -52,14 +65,32 @@ class Workout with ChangeNotifier {
     notifyListeners();
   }
 
+  void startRestTimer(int seconds) {
+    _restStopWatch.reset();
+    _totalRestSeconds = seconds;
+    _restStopWatch.start();
+    _restTimer = Timer(Duration(seconds: seconds), () {
+      _restStopWatch.stop();
+      notifyListeners();
+    });
+    notifyListeners();
+  }
+
+  void cancelRestTimer() {
+    _restStopWatch.reset();
+    _restStopWatch.stop();
+    _restTimer.cancel();
+    notifyListeners();
+  }
+
   void startWorkout() {
     _isRunning = true;
-    _stopWatch.start();
+    _workoutStopWatch.start();
     notifyListeners();
   }
 
   void pauseWorkout() {
-    _stopWatch.stop();
+    _workoutStopWatch.stop();
     notifyListeners();
   }
 

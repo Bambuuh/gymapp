@@ -9,7 +9,6 @@ import 'package:gymapp/screens/add_routine_screen.dart';
 import 'package:gymapp/screens/add_workout_screen.dart';
 import 'package:gymapp/screens/home_screen.dart';
 import 'package:gymapp/screens/login_screen.dart';
-import 'package:gymapp/screens/rest_screen.dart';
 import 'package:gymapp/screens/routine_list_screen.dart';
 import 'package:gymapp/screens/routine_screen.dart';
 import 'package:gymapp/screens/select_repetitions_screen.dart';
@@ -65,7 +64,6 @@ class GymApp extends StatelessWidget {
           AddExerciseScreen.routeName: (context) => AddExerciseScreen(),
           SelectRepetitionsScreen.routeName: (context) => SelectRepetitionsScreen(),
           SelectWeightScreen.routeName: (context) => SelectWeightScreen(),
-          RestScreen.routeName: (context) => RestScreen(),
         },
       ),
     );
