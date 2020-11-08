@@ -36,7 +36,9 @@ class _WorkoutExerciseScreenState extends State<WorkoutExerciseScreen> {
   @override
   void dispose() {
     super.dispose();
-    timer.cancel();
+    if (timer != null) {
+      timer.cancel();
+    }
   }
 
   void setPrettyTime(Workout workout) {
