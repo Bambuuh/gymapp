@@ -17,10 +17,14 @@ import 'package:gymapp/screens/workout_exercise_screen.dart';
 import 'package:gymapp/screens/workout_routine_screen.dart';
 import 'package:gymapp/screens/workout_screen.dart';
 import 'package:gymapp/screens/workout_workout_screen.dart';
+import 'package:gymapp/services/notification_service.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
+  await Notifications.init();
   await Firebase.initializeApp();
   runApp(GymApp());
 }

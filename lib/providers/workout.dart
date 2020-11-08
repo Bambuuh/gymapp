@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:gymapp/database/util.dart';
 import 'package:gymapp/modules/exercise.dart';
+import 'package:gymapp/services/notification_service.dart';
 
 class Workout with ChangeNotifier {
   String id;
@@ -13,6 +14,7 @@ class Workout with ChangeNotifier {
   Stopwatch _restStopWatch = Stopwatch();
   Timer _restTimer;
   int _totalRestSeconds;
+  int _restNotificationId;
 
   Workout({
     this.id,
@@ -65,7 +67,7 @@ class Workout with ChangeNotifier {
     notifyListeners();
   }
 
-  void startRestTimer(int seconds) {
+  void startRestTimer(int seconds) async {
     _restStopWatch.reset();
     _totalRestSeconds = seconds;
     _restStopWatch.start();
@@ -74,6 +76,7 @@ class Workout with ChangeNotifier {
       notifyListeners();
     });
     notifyListeners();
+    _restNotificationId = await Notifications.scheduleNotification(seconds, 'Rest completed!', 'Get to lifting!');
   }
 
   void cancelRestTimer() {
@@ -81,6 +84,7 @@ class Workout with ChangeNotifier {
     _restStopWatch.stop();
     _restTimer.cancel();
     notifyListeners();
+    Notifications.cancelNotification(_restNotificationId);
   }
 
   void startWorkout() {
